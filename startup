@@ -1,0 +1,39 @@
+#! /bin/bash
+
+cd /root
+if [ ! -f startup_done ]; then
+  # move default config files to volumes if missing
+  #if [ ! -f .spamassassin/user_prefs ]; then
+  #  mv spamassassin_user_prefs .spamassassin/user_prefs
+  #else
+  #  rm spamassassin_user_prefs
+  #fi
+  if [ ! -f .imapfilter/config.lua ]; then
+    mv imapfilter_config.lua .imapfilter/config.lua
+  else
+    rm imapfilter_config.lua
+  fi
+  if [ ! -f accounts/imap_accounts.txt ]; then
+    mv imap_accounts.txt accounts/imap_accounts.txt
+  else
+    rm imap_accounts.txt
+  fi
+
+  # start services, etc...
+  service rsyslog start
+
+  alias logger="logger -e -s"
+  logger "running sa-learn"
+  sa-learn --force-expire -D
+
+  logger "starting spamassassin"
+  service spamassassin start
+
+  logger "running learm_spam"
+  ./learn_spam.sh
+
+  logger "starting CRON"
+  service cron start
+
+  touch startup_done
+fi
