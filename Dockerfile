@@ -37,11 +37,9 @@ RUN wget https://github.com/isbg/isbg/archive/master.zip && \
     rm isbg.zip
 
 # spamassassin
-#RUN mkdir .spamassassin && \
-#    chmod 0700 .spamassassin && \
 RUN mkdir -p /var/spamassassin/bayesdb && \
     chown -R debian-spamd:mail /var/spamassassin
-#ADD spamassassin/user_prefs spamassassin_user_prefs
+ADD spamassassin/user_prefs spamassassin_user_prefs
 
 # imapfilter
 RUN mkdir .imapfilter
@@ -68,7 +66,6 @@ ADD startup /root/startup
 
 # volumes
 VOLUME /var/spamassassin
-#VOLUME /root/.spamassassin
 VOLUME /root/.imapfilter
 VOLUME /root/accounts
 

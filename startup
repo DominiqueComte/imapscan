@@ -3,11 +3,11 @@
 cd /root
 if [ ! -f startup_done ]; then
   # move default config files to volumes if missing
-  #if [ ! -f .spamassassin/user_prefs ]; then
-  #  mv spamassassin_user_prefs .spamassassin/user_prefs
-  #else
-  #  rm spamassassin_user_prefs
-  #fi
+  if [ ! -f /var/spamassassin/user_prefs ]; then
+    mv spamassassin_user_prefs /var/spamassassin/user_prefs
+  else
+    rm spamassassin_user_prefs
+  fi
   if [ ! -f .imapfilter/config.lua ]; then
     mv imapfilter_config.lua .imapfilter/config.lua
   else

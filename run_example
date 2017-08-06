@@ -1,0 +1,13 @@
+#! /bin/bash
+
+IMAPUSER=example
+
+mkdir ${HOME}/docker_volumes/spamassassin 2>/dev/null
+mkdir ${HOME}/docker_volumes/${IMAPUSER}_accounts 2>/dev/null
+mkdir ${HOME}/docker_volumes/${IMAPUSER}_imapfilter 2>/dev/null
+
+docker run -d --rm --name imapscan_${IMAPUSER} \
+	-v ${HOME}/docker_volumes/spamassassin:/var/spamassassin \
+	-v ${HOME}/docker_volumes/${IMAPUSER}_imapfilter:/root/.imapfilter \
+	-v ${HOME}/docker_volumes/${IMAPUSER}_accounts:/root/accounts \
+	domcomte/imapscan:latest
