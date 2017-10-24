@@ -1,17 +1,21 @@
 #! /bin/bash
 
-while [ -f "/var/spamassassin/learn_lock" ] ; do
+LOCKFILE=/var/spamassassin/scan_lock
+while [ -f "${LOCKFILE}" ] ; do
   logger "Pausing until lock file disappears."
   sleep 5
 done
+STARTED=0
 
 function cleanup {
-  rm /var/spamassassin/learn_lock
+  if [ $STARTED -eq 1 ]; then
+    rm "${LOCKFILE}"
+  fi
 }
 trap cleanup EXIT
 
-touch /var/spamassassin/learn_lock
-
+touch "${LOCKFILE}"
+STARTED=1
 set -f
 OLD_IFS=${IFS}
 file="${HOME}/accounts/imap_accounts_learn.txt"
