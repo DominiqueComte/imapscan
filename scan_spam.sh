@@ -20,7 +20,7 @@ if [ -f "${file}" ]; then
   while read -r line; do
     # ignore lines commented with #
     [[ "${line}" =~ ^#.*$ ]] && continue
-		IFS=$'\t' read -r -a account <<< "${line}"
+    IFS=$'\t' read -r -a account <<< "${line}"
     # to debug parsing of input file, uncomment next line
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
