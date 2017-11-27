@@ -27,7 +27,7 @@ RUN apt-get update && \
 WORKDIR /root
 
 # install isbg
-RUN wget https://github.com/isbg/isbg/archive/master.zip && \
+RUN wget https://github.com/dc55028/isbg/archive/master.zip && \
     mv master.zip isbg.zip && \
     unzip isbg.zip && \
     cd isbg-master && \
