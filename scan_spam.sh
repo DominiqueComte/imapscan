@@ -18,22 +18,25 @@ set -o pipefail
 OLD_IFS=${IFS}
 file=${HOME}/accounts/imap_accounts.txt
 if [ -f "${file}" ]; then
-  while read -r line; do
+  while read -r line
+  do
     # ignore lines commented with #
     [[ "${line}" =~ ^#.*$ ]] && continue
     IFS=$'\t' read -r -a account <<< "${line}"
     # to debug parsing of input file, uncomment next line
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
-    logger "scanning ${account[1]}/${account[4]}"
-    until /usr/local/bin/isbg.py --noninteractive --flag \
-      --imaphost ${account[0]} --imapuser "${account[1]}"  --imappasswd "${account[2]}" \
-      --spaminbox "${account[3]}" \
-      --imapinbox "${account[4]}" 2>&1 | logger
-    do
-      echo "isbg failed, retrying..." | logger
-    done
-    logger "scanning of ${account[1]}/${account[4]} done"
+    {
+      echo "scanning ${account[1]}/${account[4]}"
+      until /usr/local/bin/isbg.py --noninteractive --flag \
+        --imaphost ${account[0]} --imapuser "${account[1]}"  --imappasswd "${account[2]}" \
+        --spaminbox "${account[3]}" \
+        --imapinbox "${account[4]}"
+      do
+        (>&2 echo "isbg failed, retrying..." | logger)
+      done
+      echo "scanning of ${account[1]}/${account[4]} done"
+    } 2>&1 | logger
   done < "$file"
   until imapfilter | logger
   do
