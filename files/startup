@@ -18,6 +18,9 @@ if [ ! -f startup_done ]; then
   else
     rm imap_accounts.txt
   fi
+  if [ ! -f accounts/imap_accounts_learn.txt ]; then
+    cp accounts/imap_accounts.txt accounts/imap_accounts.txt
+  fi
 
   # start services, etc...
   service rsyslog start

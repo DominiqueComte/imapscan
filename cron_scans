@@ -1,2 +1,0 @@
-*/1 2-23 * * * /root/scan_spam.sh
-0 1 * * * /root/learn_spam.sh
