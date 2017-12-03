@@ -2,7 +2,7 @@
 
 LOCKFILE=/var/spamassassin/scan_lock
 while [ -f "${LOCKFILE}" ] ; do
-  logger "Pausing until lock file disappears."
+  echo "Pausing until lock file disappears."
   sleep 5
 done
 STARTED=0
@@ -29,17 +29,16 @@ if [ -f ${file} ]; then
     # to debug parsing of input file, uncomment next line
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
-    {
-      echo "learning ${account[1]}/${account[4]}"
-      until /usr/local/bin/isbg.py --noninteractive \
-        --imaphost ${account[0]} --imapuser ${account[1]}  --imappasswd ${account[2]} \
-        --learnspambox ${account[3]} \
-        --learnhambox ${account[4]} \
-        --teachonly
-      do
-        (>&2 echo "isbg failed, retrying...")
-      done
-      echo "finished learning from ${account[1]}/${account[4]}"
-    } 2>&1 | logger
+    echo "learning ${account[1]}/${account[4]}"
+    until /usr/local/bin/isbg.py --noninteractive \
+      --imaphost ${account[0]} --imapuser ${account[1]}  --imappasswd ${account[2]} \
+      --learnspambox ${account[3]} \
+      --learnhambox ${account[4]} \
+      --teachonly
+    do
+      (>&2 echo "isbg failed, retrying...")
+    done
+    echo "finished learning from ${account[1]}/${account[4]}"
   done < "$file"
+  echo "EOS"
 fi

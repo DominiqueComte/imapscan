@@ -26,20 +26,19 @@ if [ -f "${file}" ]; then
     # to debug parsing of input file, uncomment next line
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
-    {
-      echo "scanning ${account[1]}/${account[4]}"
-      until /usr/local/bin/isbg.py --noninteractive --flag \
+    echo "scanning ${account[1]}/${account[4]}"
+    until /usr/local/bin/isbg.py --noninteractive --flag \
         --imaphost ${account[0]} --imapuser "${account[1]}"  --imappasswd "${account[2]}" \
         --spaminbox "${account[3]}" \
         --imapinbox "${account[4]}"
-      do
-        (>&2 echo "isbg failed, retrying..." | logger)
-      done
-      echo "scanning of ${account[1]}/${account[4]} done"
-    } 2>&1 | logger
+    do
+        (>&2 echo "isbg failed, retrying...")
+    done
+    echo "scanning of ${account[1]}/${account[4]} done"
   done < "$file"
-  until imapfilter | logger
+  until imapfilter
   do
-    echo "imapfilter failed, retrying..." | logger
+    echo "imapfilter failed, retrying..."
   done
+  echo "EOS"
 fi
