@@ -1,4 +1,4 @@
-Docker container that uses isbg.py and imapfilter to filter out spam from a remote IMAP server.
+Docker container that uses [isbg](https://github.com/dc55028/isbg) and [imapfilter](https://github.com/lefcha/imapfilter) to filter out spam from a remote IMAP server.
 
 Docker hub link: https://hub.docker.com/r/domcomte/imapscan/
 
