@@ -5,7 +5,7 @@
 
   <groupId>org.morkitu.marmotte</groupId>
   <artifactId>imapscan</artifactId>
-  <version>0.7</version>
+  <version>0.9</version>
 
   <description>Remote IMAP spam filtering.</description>
 
@@ -14,13 +14,13 @@
   </properties>
 
   <build>
-	  <extensions>
-		<extension>
-		  <groupId>com.spotify</groupId>
-		  <artifactId>dockerfile-maven-extension</artifactId>
-		  <version>1.3.6</version>
-		</extension>
-	  </extensions>
+    <extensions>
+      <extension>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-extension</artifactId>
+        <version>1.3.6</version>
+      </extension>
+    </extensions>
     <plugins>
       <plugin>
         <groupId>com.spotify</groupId>
@@ -34,13 +34,13 @@
             </goals>
           </execution>
         </executions>
-		<configuration>
-		  <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
-		  <dockerDirectory>${project.basedir}</dockerDirectory>
-		  <imageName>${project.artifactId}</imageName>
-          <repository>domcomte/${project.artifactId}</repository>
-          <tag>${project.version}</tag>
-		</configuration>
+        <configuration>
+          <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+          <dockerDirectory>${project.basedir}</dockerDirectory>
+          <imageName>${project.artifactId}</imageName>
+            <repository>domcomte/${project.artifactId}</repository>
+            <tag>${project.version}</tag>
+        </configuration>
       </plugin>
     </plugins>
   </build>

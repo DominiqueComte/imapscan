@@ -2,6 +2,9 @@
 
 cd /root
 if [ ! -f startup_done ]; then
+  if [ -f /var/spamassassin/scan_lock ]; then
+    rm /var/spamassassin/scan_lock
+  fi
   # move default config files to volumes if missing
   if [ ! -f /var/spamassassin/user_prefs ]; then
     mv spamassassin_user_prefs /var/spamassassin/user_prefs
@@ -22,6 +25,11 @@ if [ ! -f startup_done ]; then
     cp accounts/imap_accounts.txt accounts/imap_accounts.txt
   fi
 
+  unlink /etc/localtime
+  ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+  unlink /etc/timezone
+  ln -s /usr/share/zoneinfo/Europe/Paris /etc/timezone
+
   # start services, etc...
   service rsyslog start
 
@@ -29,7 +37,7 @@ if [ ! -f startup_done ]; then
   logger "updating SpamAssassin rules"
   sa-update -v --refreshmirrors | logger
   logger "running sa-learn"
-  sa-learn --force-expire -D | logger
+  sa-learn --force-expire | logger
 
   logger "starting spamassassin"
   service spamassassin start
