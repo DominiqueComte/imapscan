@@ -26,8 +26,10 @@ if [ ! -f startup_done ]; then
   service rsyslog start
 
   alias logger="logger -e -s"
+  logger "updating SpamAssassin rules"
+  sa-update -v --refreshmirrors | logger
   logger "running sa-learn"
-  sa-learn --force-expire -D
+  sa-learn --force-expire -D | logger
 
   logger "starting spamassassin"
   service spamassassin start
