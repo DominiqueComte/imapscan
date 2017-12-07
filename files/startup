@@ -11,6 +11,10 @@ if [ ! -f startup_done ]; then
   else
     rm spamassassin_user_prefs
   fi
+  if [ ! -f /root/.spamassassin/user_prefs ]; then
+    mkdir /root/.spamassassin
+    cp /var/spamassassin/user_prefs /root/.spamassassin/user_prefs
+  fi
   if [ ! -f .imapfilter/config.lua ]; then
     mv imapfilter_config.lua .imapfilter/config.lua
   else
