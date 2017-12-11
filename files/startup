@@ -34,23 +34,27 @@ if [ ! -f startup_done ]; then
   unlink /etc/timezone
   ln -s /usr/share/zoneinfo/Europe/Paris /etc/timezone
 
-  # start services, etc...
-  service rsyslog start
-
-  alias logger="logger -e -s"
-  logger "updating SpamAssassin rules"
-  sa-update -v --refreshmirrors | logger
-  logger "running sa-learn"
-  sa-learn --force-expire | logger
-
-  logger "starting spamassassin"
-  service spamassassin start
-
-  logger "running learm_spam"
-  ./learn_spam.sh
-
-  logger "starting CRON"
-  service cron start
-
   touch startup_done
 fi
+
+alias logger="logger -e -s"
+
+# start services, etc...
+logger "starting services"
+service rsyslog start
+service exim4 start
+service dbus start
+
+logger "updating SpamAssassin rules"
+sa-update -v --refreshmirrors | logger
+logger "running sa-learn"
+sa-learn --force-expire | logger
+
+logger "starting spamassassin"
+service spamassassin start
+
+logger "running learm_spam"
+./learn_spam.sh | logger
+
+logger "starting CRON"
+service cron start

@@ -5,7 +5,7 @@
 
   <groupId>domcomte</groupId>
   <artifactId>imapscan</artifactId>
-  <version>0.11</version>
+  <version>0.12</version>
 
   <description>Remote IMAP spam filtering.</description>
 
