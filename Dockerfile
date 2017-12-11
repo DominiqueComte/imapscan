@@ -21,6 +21,8 @@ RUN apt-get update && \
       unzip \
       wget \
     && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     pip install --upgrade pip && \
     pip install docopt==0.6.2
 
