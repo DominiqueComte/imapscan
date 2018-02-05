@@ -2,6 +2,13 @@
 
 cd /root
 if [ ! -f startup_done ]; then
+  if [ -f rsyslog.conf ]; then
+    mv rsyslog.conf /etc/
+  fi
+  if [ -f bashrc ]; then
+    cat bashrc >> /etc/bash.bashrc
+    rm bashrc
+  fi
   if [ -f /var/spamassassin/scan_lock ]; then
     rm /var/spamassassin/scan_lock
   fi
@@ -26,35 +33,31 @@ if [ ! -f startup_done ]; then
     rm imap_accounts.txt
   fi
   if [ ! -f accounts/imap_accounts_learn.txt ]; then
-    cp accounts/imap_accounts.txt accounts/imap_accounts.txt
+    head -n 1 accounts/imap_accounts.txt > accounts/imap_accounts_learn.txt
   fi
-
-  unlink /etc/localtime
-  ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
-  unlink /etc/timezone
-  ln -s /usr/share/zoneinfo/Europe/Paris /etc/timezone
 
   touch startup_done
 fi
 
-alias logger="logger -e -s"
-
 # start services, etc...
-logger "starting services"
+echo "starting services"
 service rsyslog start
-service exim4 start
-service dbus start
 
-logger "updating SpamAssassin rules"
-sa-update -v --refreshmirrors | logger
-logger "running sa-learn"
-sa-learn --force-expire | logger
+{
+  echo "fixing permissions, just in case..."
+  chown -R debian-spamd:mail /var/spamassassin
 
-logger "starting spamassassin"
-service spamassassin start
+  echo "updating SpamAssassin rules"
+  sa-update -v --refreshmirrors
+  echo "running sa-learn"
+  sa-learn --force-expire
 
-logger "running learm_spam"
-./learn_spam.sh | logger
+  logger "starting spamassassin"
+  service spamassassin start
 
-logger "starting CRON"
-service cron start
+  echo "running learm_spam"
+  ./learn_spam.sh
+
+  echo "starting CRON"
+  service cron start
+} | /usr/bin/logger -e -s -t startup

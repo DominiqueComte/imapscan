@@ -29,8 +29,8 @@ if [ -f ${file} ]; then
     # to debug parsing of input file, uncomment next line
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
-    echo "learning ${account[1]}/${account[4]}"
-    until /usr/local/bin/isbg.py --noninteractive \
+    echo "learning spam in ${account[1]}/${account[3]} and ham in ${account[1]}/${account[4]}"
+    until /usr/local/bin/isbg.py --noninteractive --spamc \
       --imaphost ${account[0]} --imapuser ${account[1]}  --imappasswd ${account[2]} \
       --learnspambox ${account[3]} \
       --learnhambox ${account[4]} \
@@ -38,7 +38,7 @@ if [ -f ${file} ]; then
     do
       (>&2 echo "isbg failed, retrying...")
     done
-    echo "finished learning from ${account[1]}/${account[4]}"
+    echo "finished learning from ${account[1]}/${account[3]} and ${account[1]}/${account[4]}"
   done < "$file"
   echo "EOS"
 fi

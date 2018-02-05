@@ -27,7 +27,7 @@ options.timeout = 120
 options.subscribe = true
 
 lines = lines_from('/root/accounts/imap_accounts.txt')
--- print all line numbers and their contents
+-- loop on all lines contents
 for k,v in pairs(lines) do
   fields = split(v, '\t')
   --for idx,value in pairs(fields) do
@@ -39,11 +39,11 @@ for k,v in pairs(lines) do
     password = fields[3],
     ssl = 'ssl23'
   }
-  print('getting flagged messages from folder '..fields[5])
+  print('getting flagged messages from folder '..fields[2]..'/'..fields[5])
   msgs = account[fields[5]]:is_flagged()
-  print('moving '..#msgs..' flagged messages to folder '..fields[4])
+  print('moving '..#msgs..' flagged messages to folder '..fields[2]..'/'..fields[4])
   msgs:move_messages(account[fields[4]])
   msgs = account[fields[4]]:is_flagged()
-  print('unflagging '..#msgs..' flagged messages in folder '..fields[4])
+  print('unflagging '..#msgs..' flagged messages in folder '..fields[2]..'/'..fields[4])
   msgs:unmark_flagged()
 end

@@ -1,11 +1,10 @@
 required_score 5.0
-#use_razor2 1
+use_razor2 1
 use_pyzor 1
 use_bayes 1
 bayes_auto_learn 1
 bayes_auto_learn_threshold_nonspam -0.001
 bayes_auto_learn_threshold_spam 9.0
-bayes_path /var/spamassassin/bayesdb/bayes
 #use_auto_whitelist 0
 score BAYES_00 -4
 score BAYES_05 -2
@@ -18,3 +17,4 @@ score DNS_FROM_RFC_BOGUSMX 0
 score __DNS_FROM_RFC_POST 0
 score __DNS_FROM_RFC_ABUSE 0
 score __DNS_FROM_RFC_WHOIS 0
+

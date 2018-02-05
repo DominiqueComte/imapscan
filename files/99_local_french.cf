@@ -1,0 +1,11 @@
+## loi Pinel
+body FR_IMPOTSPINEL                     /\bloi.{1,10}\b.pinel/i
+describe FR_IMPOTSPINEL                 French: Taxes rebates
+lang fr describe FR_IMPOTSPINEL         Reductions d'impots Pinel
+score FR_IMPOTSPINEL                    4.0
+
+## via or par in From
+header FR_SENT_VIA                      From =~/ (via|par) /i
+score FR_SENT_VIA                       4
+describe FR_SENT_VIA                    From contains via or par
+lang fr describe FR_SENT_VIA            From contient via ou par

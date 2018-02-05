@@ -1,0 +1,82 @@
+#####################################################################################
+##### FRENCH SPECIFIC SPAMASSASSIN RULES. 
+##### USE AND REDISTRIBUTE WITH THIS NOTE AT YOUR OWN RISK AND PLEASURE.
+##### AUTHOR: John GALLET
+##### Version: 2008-JUNE-21
+##### Latest: http://www.saphirtech.fr/
+##### Status: It Works For Me (tm)
+#####################################################################################
+# Spam is legal in France !
+body FR_SPAMISLEGAL                     /\b(Conform.+ment|En vertu).{0,5}(article.{0,4}34.{0,4})?la loi\b/i
+describe FR_SPAMISLEGAL                 French: pretends spam is (l)awful.
+lang fr describe FR_SPAMISLEGAL		Invoque la loi informatique et libertes.
+score FR_SPAMISLEGAL                    2.5
+
+body FR_SPAMISLEGAL_2                   /\bdroit d.acc.+s.{1,3}(de modification)?.{0,5}de rectification\b/i
+describe FR_SPAMISLEGAL_2               French: pretends spam is (l)awful.
+lang fr describe FR_SPAMISLEGAL_2	Invoque le droit de rectification cnil.
+score FR_SPAMISLEGAL_2                  2.5
+
+#####
+# yeah, sure.
+body FR_NOTSPAM                         /\b(ceci|ce).{1,9} n.est pas.{1,5}spam\b/i
+describe FR_NOTSPAM                     French: claims not to be spam.
+lang fr describe FR_NOTSPAM		Affirme ne pas etre du spam.
+score FR_NOTSPAM                        4.0
+
+#####
+## I can pay my taxes
+body FR_PAYLESSTAXES                    /\b(paye|calcul|simul|r.+dui|investi).{1,7}(moins|vo|ses).{0,5}imp.+t(s)?\b/i
+describe FR_PAYLESSTAXES                French: Pay less taxes
+lang fr describe FR_PAYLESSTAXES	Simulateurs et reductions d'impots.
+score FR_PAYLESSTAXES                   2.0
+
+body FR_REALESTATE_INVEST               /\b(loi)? (de.robien|girardin).{1,15}(neuf|recentr.+|ancien|IR|IS|imp.+t(s)?|industriel(le)?)\b/i
+describe FR_REALESTATE_INVEST           French: Invest in real-estate with tax-reductions
+lang fr describe FR_REALESTATE_INVEST	Reduction impots immobilier. 
+score FR_REALESTATE_INVEST              2.5
+
+#####
+# I won at the casino
+body FR_ONLINEGAMBLING                  /\b(casino(s)?|jeu(x)?|joueur(s)?) (en ligne|de grattage)\b/i
+describe FR_ONLINEGAMBLING              French: Online gambling
+lang fr describe FR_ONLINEGAMBLING	Jeux en ligne.
+score FR_ONLINEGAMBLING                 2.0
+
+#####
+# Baby, did you forget to take your meds ?
+body FR_ONLINEMEDS                      /\bpharmacie(s)? (en ligne|internet)\b/i
+describe FR_ONLINEMEDS                  French: Online meds ordering
+lang fr describe FR_ONLINEMEDS		Achat de medicaments en ligne.
+score FR_ONLINEMEDS                     3.0
+
+######
+# Tell me why
+body FR_REASON_SUBSCRIBE                /\bVous recevez ce(t|tte)? (message|mail|m.+l|lettre|news.+) (car|parce que)\b/i
+describe FR_REASON_SUBSCRIBE            French: you subscribed to my spam.
+lang fr describe FR_REASON_SUBSCRIBE	Indique pourquoi vous recevez le courrier.
+score FR_REASON_SUBSCRIBE               1.5
+
+#####
+# How to unsubscribe
+body FR_HOWTOUNSUBSCRIBE                /\b(souhaitez|d.+sirez|pour).{1,10}(plus.{1,}recevoir|d.+sincrire|d.+sinscription|d.+sabonner).{0,10}(information|email|mail|mailing|newsletter|lettre|liste|message|offre|promotion|programme)(s)?\b/i
+describe FR_HOWTOUNSUBSCRIBE            French: how to unsubscribe
+lang fr describe FR_HOWTOUNSUBSCRIBE	Indique comment se desabonner.
+score FR_HOWTOUNSUBSCRIBE               2.0
+
+####
+# Various "CRM" (Could Remove Me)
+#####
+header FR_MAILER_1                      X-Mailer =~ /(delosmail|cabestan|ems|mp6|wamailer|phpmailer|eMailink|Accucast|Benchmail)/i
+describe FR_MAILER_1                    French spammy X-Mailer
+lang fr describe FR_MAILER_1		X-Mailer couramment employe pour des spams en francais.
+score FR_MAILER_1                       4.0
+
+header FR_MAILER_2                      X-EMV-CampagneId =~ /.+/
+describe FR_MAILER_2                    French spammy mailer header
+lang fr describe FR_MAILER_2		X-Mailer couramment employe pour des spams en francais.
+score FR_MAILER_2                       4.0
+
+#####################################################################################
+##### END FRENCH SPECIFIC SPAMASSASSIN RULES.
+#####################################################################################
