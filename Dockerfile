@@ -23,8 +23,8 @@ RUN apt-get update && \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN pip install --upgrade pip && \
-    pip install wheel && \
+#RUN pip install --upgrade pip && \
+RUN pip install wheel && \
     pip install docopt==0.6.2
 
 WORKDIR /root
