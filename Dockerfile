@@ -22,8 +22,8 @@ RUN apt-get update && \
       wget \
     && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip && \
+    rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip && \
     pip install wheel && \
     pip install docopt==0.6.2
 
