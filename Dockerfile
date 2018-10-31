@@ -24,8 +24,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 #RUN pip install --upgrade pip && \
-RUN pip install wheel && \
-    pip install docopt==0.6.2
+RUN /usr/bin/env python3 -m pip install wheel && \
+    /usr/bin/env python3 -m pip install docopt==0.6.2
 
 WORKDIR /root
 
