@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LOCKFILE=/var/spamassassin/scan_lock
+LOCKFILE=/var/lock/spamassassin_scan_lock
 [ -f "${LOCKFILE}" ] && exit
 STARTED=0
 

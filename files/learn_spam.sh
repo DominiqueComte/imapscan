@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LOCKFILE=/var/spamassassin/scan_lock
+LOCKFILE=/var/lock/spamassassin_scan_lock
 while [ -f "${LOCKFILE}" ] ; do
   echo "Pausing until lock file disappears."
   sleep 5
