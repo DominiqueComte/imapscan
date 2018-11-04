@@ -1,6 +1,6 @@
 FROM debian:latest
 
-ARG CTNR_TZ Europe/Paris
+ARG CTNR_TZ=Europe/Paris
 # shell to start from Kitematic
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CTNR_TZ=${CTNR_TZ}
