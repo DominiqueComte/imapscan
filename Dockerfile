@@ -63,7 +63,7 @@ RUN mkdir /root/accounts ; \
       ln -s "/usr/share/zoneinfo/${CTNR_TZ}" /etc/localtime ; \
       unlink /etc/timezone ; \
       ln -s "/usr/share/zoneinfo/${CTNR_TZ}" /etc/timezone ; \
-      dpkg-reconfigure -f noninteractive tzdata \
+      dpkg-reconfigure -f noninteractive tzdata ; \
     fi
 
 # volumes
