@@ -1,7 +1,9 @@
 FROM debian:latest
 
+ARG CTNR_TZ Europe/Paris
 # shell to start from Kitematic
 ENV DEBIAN_FRONTEND=noninteractive
+ENV CTNR_TZ=${CTNR_TZ}
 ENV SHELL=/bin/bash
 
 # install dependencies
@@ -56,10 +58,12 @@ RUN mkdir /root/accounts ; \
     mv 9*.cf /etc/spamassassin/ ; \
     echo "alias logger='/usr/bin/logger -e'" >> /etc/bash.bashrc ; \
     echo "LANG=en_US.UTF-8" > /etc/default/locale ; \
-    unlink /etc/localtime ; \
-    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime ; \
-    unlink /etc/timezone ; \
-    ln -s /usr/share/zoneinfo/Europe/Paris /etc/timezone
+    if [ -e "/usr/share/zoneinfo/${CTNR_TZ}" ]; then \
+      unlink /etc/localtime ; \
+      ln -s "/usr/share/zoneinfo/${CTNR_TZ}" /etc/localtime ; \
+      unlink /etc/timezone ; \
+      ln -s "/usr/share/zoneinfo/${CTNR_TZ}" /etc/timezone \
+    fi
 
 # volumes
 VOLUME /var/spamassassin
