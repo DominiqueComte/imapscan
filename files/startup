@@ -5,33 +5,36 @@ if [ ! -f startup_done ]; then
   if [ -f rsyslog.conf ]; then
     mv rsyslog.conf /etc/
   fi
+  
   if [ -f bashrc ]; then
     cat bashrc >> /etc/bash.bashrc
     rm bashrc
   fi
-  if [ -f /var/spamassassin/scan_lock ]; then
-    rm /var/spamassassin/scan_lock
-  fi
+  
   # move default config files to volumes if missing
   if [ ! -f /var/spamassassin/user_prefs ]; then
     mv spamassassin_user_prefs /var/spamassassin/user_prefs
   else
     rm spamassassin_user_prefs
   fi
+  
   if [ ! -f /root/.spamassassin/user_prefs ]; then
     mkdir /root/.spamassassin
     cp /var/spamassassin/user_prefs /root/.spamassassin/user_prefs
   fi
+  
   if [ ! -f .imapfilter/config.lua ]; then
     mv imapfilter_config.lua .imapfilter/config.lua
   else
     rm imapfilter_config.lua
   fi
+  
   if [ ! -f accounts/imap_accounts.txt ]; then
     mv imap_accounts.txt accounts/imap_accounts.txt
   else
     rm imap_accounts.txt
   fi
+  
   if [ ! -f accounts/imap_accounts_learn.txt ]; then
     head -n 1 accounts/imap_accounts.txt > accounts/imap_accounts_learn.txt
   fi
