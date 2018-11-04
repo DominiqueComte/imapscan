@@ -1,10 +1,13 @@
 FROM debian:latest
 
-ARG CTNR_TZ=Europe/Paris
+# timezone name that can be overridden when building the container
+ARG CTNR_TZ=UTC
+
 # shell to start from Kitematic
 ENV DEBIAN_FRONTEND=noninteractive
-ENV CTNR_TZ=${CTNR_TZ}
 ENV SHELL=/bin/bash
+# timezone to set
+ENV CTNR_TZ=${CTNR_TZ}
 
 # install dependencies
 RUN apt-get update && \
